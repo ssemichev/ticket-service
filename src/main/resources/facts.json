@@ -1,0 +1,139 @@
+{
+  "@items": [
+    {
+      "@type": "ticketbooking.model.Show",
+      "date": 1446862688462,
+      "id": 1,
+      "sectionPrices": {
+        "@id": 1,
+        "@items": [
+          {
+            "@type": "ticketbooking.model.SectionPrice",
+            "id": 1,
+            "price": 100.0,
+            "section": {
+              "description": "Orchestra",
+              "id": 1,
+              "name": "Orchestra",
+              "numberOfRows": 25,
+              "rowCapacity": 50
+            }
+          },
+          {
+            "@type": "ticketbooking.model.SectionPrice",
+            "id": 1,
+            "price": 75.0,
+            "section": {
+              "description": "Main",
+              "id": 2,
+              "name": "Main",
+              "numberOfRows": 20,
+              "rowCapacity": 100
+            }
+          },
+          {
+            "@type": "ticketbooking.model.SectionPrice",
+            "id": 1,
+            "price": 50.0,
+            "section": {
+              "description": "Balcony 1",
+              "id": 3,
+              "name": "Balcony1",
+              "numberOfRows": 15,
+              "rowCapacity": 100
+            }
+          },
+          {
+            "@type": "ticketbooking.model.SectionPrice",
+            "id": 1,
+            "price": 40.0,
+            "section": {
+              "description": "Balcony 2",
+              "id": 4,
+              "name": "Balcony2",
+              "numberOfRows": 15,
+              "rowCapacity": 100
+            }
+          }
+        ],
+        "@type": "java.util.Arrays$ArrayList"
+      },
+      "venue": {
+        "description": "This new production of The Wizard of Oz is an enchanting adaptation of the all-time classic, totally reconceived for the stage",
+        "id": 1,
+        "name": "The Wizard of Oz",
+        "sections": {
+          "@id": 2,
+          "@items": [
+            {
+              "@type": "ticketbooking.model.Section",
+              "description": "Orchestra",
+              "id": 1,
+              "name": "Orchestra",
+              "numberOfRows": 25,
+              "rowCapacity": 50
+            },
+            {
+              "@type": "ticketbooking.model.Section",
+              "description": "Main",
+              "id": 2,
+              "name": "Main",
+              "numberOfRows": 20,
+              "rowCapacity": 100
+            },
+            {
+              "@type": "ticketbooking.model.Section",
+              "description": "Balcony 1",
+              "id": 3,
+              "name": "Balcony1",
+              "numberOfRows": 15,
+              "rowCapacity": 100
+            },
+            {
+              "@type": "ticketbooking.model.Section",
+              "description": "Balcony 2",
+              "id": 4,
+              "name": "Balcony2",
+              "numberOfRows": 15,
+              "rowCapacity": 100
+            }
+          ],
+          "@type": "java.util.Arrays$ArrayList"
+        }
+      }
+    },
+    {
+      "@type": "ticketbooking.model.Show",
+      "date": 1446862688462,
+      "id": 2,
+      "sectionPrices": {
+        "@ref": 1
+      },
+      "venue": {
+        "description": "David Arquette stars in the title role as the legendary \"consulting detective,\" Sherlock Holmes",
+        "id": 2,
+        "name": "Sherlock Holmes",
+        "sections": {
+          "@ref": 2
+        }
+      }
+    },
+    {
+      "@type": "ticketbooking.model.Show",
+      "date": 1446862688462,
+      "id": 3,
+      "sectionPrices": {
+        "@ref": 1
+      },
+      "venue": {
+        "description": "Pericles, Prince of Tyre, sets sail on an extraordinary journey through the decades",
+        "id": 3,
+        "name": "Pericles",
+        "sections": {
+          "@ref": 2
+        }
+      }
+    }
+  ],
+  "@type": "java.util.ArrayList"
+}
