@@ -34,11 +34,12 @@ public class ResourceFactDatabaseAdapterTest {
         facts.add(new Show(2, new Date(), new Venue(2, "Sherlock Holmes", "David Arquette stars in the title role as the legendary \"consulting detective,\" Sherlock Holmes", sections), sectionsPrice));
         facts.add(new Show(3, new Date(), new Venue(3, "Pericles", "Pericles, Prince of Tyre, sets sail on an extraordinary journey through the decades", sections), sectionsPrice));
 
-        new ResourceFactDatabaseAdapter().save(facts);
+        new ResourceFactDatabaseAdapter("/facts.json").save(facts);
     }
 
     @Test
     public void testRead() throws Exception {
-        assertNotEquals(0, new ResourceFactDatabaseAdapter().read().size());
+        assertEquals(0, new ResourceFactDatabaseAdapter("/wrongPath.json").read().size());
+        assertNotEquals(0, new ResourceFactDatabaseAdapter("/facts.json").read().size());
     }
 }
