@@ -1,7 +1,5 @@
 package ticketbooking.model;
 
-import java.util.List;
-
 public class SeatHold {
 
     private Booking booking;

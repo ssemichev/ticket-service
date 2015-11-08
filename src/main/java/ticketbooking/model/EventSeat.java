@@ -43,6 +43,7 @@ public class EventSeat extends Seat {
     public void setBooking(String bookingId) {
         this.bookingId = bookingId;
         this.hasBooked = true;
+        releaseHold();
     }
 
     public void removeBooking() {

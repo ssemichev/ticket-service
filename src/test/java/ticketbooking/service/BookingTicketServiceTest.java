@@ -2,14 +2,14 @@ package ticketbooking.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticketbooking.model.Booking;
+import ticketbooking.model.SeatHold;
 import ticketbooking.model.Show;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class BookingTicketServiceTest {
 
@@ -35,19 +35,36 @@ public class BookingTicketServiceTest {
     public void testFindAndHoldSeats() throws Exception {
         assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
         ticketService.findAndHoldSeats(1, Optional.of(1), Optional.of(3), "testemail01@gmail.com");
+
         Thread.sleep(500);
         assertEquals(1249, ticketService.numSeatsAvailable(Optional.of(1)));
         ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(3), "testemail02@gmail.com");
         assertEquals(1239, ticketService.numSeatsAvailable(Optional.of(1)));
+
         Thread.sleep(700);
         assertEquals(1240, ticketService.numSeatsAvailable(Optional.of(1)));
+
         Thread.sleep(500);
         assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
     }
 
     @Test
-    public void testReserveSeats() throws Exception {
-        Format formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        String bookingId = 1 + "-" + "customerEmail" + "-" + formatter.format(new Date()) + "-";
+    public void testNoneExistingBooking() throws Exception {
+        assertNull(ticketService.reserveSeats("non-exist-booking", "testemail01@gmail.com"));
+    }
+
+    @Test
+    public void testBooking() throws Exception {
+        Booking booking = ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(3), "testemail01@gmail.com").getBooking();
+        assertEquals(booking.getId(), ticketService.reserveSeats(booking.getId(), booking.getCustomerEmail()));
+    }
+
+    @Test
+    public void testExpiredBooking() throws Exception {
+        Booking booking = ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(3), "testemail01@gmail.com").getBooking();
+
+        Thread.sleep(1500);
+        ticketService.numSeatsAvailable(Optional.of(1));
+        assertNull(ticketService.reserveSeats(booking.getId(), booking.getCustomerEmail()));
     }
 }

@@ -70,10 +70,22 @@ public class BookingTicketService implements TicketService {
     }
 
     @Override
-    public String reserveSeats(int seatHoldId, String customerEmail) {
-        cleanUpHolds();
+    public String reserveSeats(String bookingId, String customerEmail) {
+        List<Booking> bookings = holds.stream().filter(h -> Objects.equals(h.getId(), bookingId)).limit(1).collect(Collectors.toList());
 
-        return null;
+        if (bookings.size() != 1) {
+            return null;
+        }
+
+        Booking booking = bookings.get(0);
+
+        booking.getSeats().forEach(
+                s -> seats.get(s.getSectionId()).stream()
+                        .filter(es -> es.getNumber() == s.getNumber() && es.getRowNumber() == s.getRowNumber())
+                        .forEach(seat -> seat.setBooking(booking.getId()))
+        );
+
+        return booking.getId();
     }
 
     private Map<Integer, List<EventSeat>> populateEventSeats(List<Section> sections) {
@@ -105,7 +117,7 @@ public class BookingTicketService implements TicketService {
                 .filter(h -> (current.getTime() - h.getCreatedOn().getTime())  > holdDuration * 1000)
                 .collect(Collectors.toList());
 
-        //release holds from seats
+        //release expired holds from seats
         expiredHolds.forEach(h -> h.getSeats().forEach(
                 s -> seats.get(s.getSectionId()).stream()
                         .filter(es -> es.getNumber() == s.getNumber() && es.getRowNumber() == s.getRowNumber())
