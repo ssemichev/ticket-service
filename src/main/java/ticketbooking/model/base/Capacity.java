@@ -1,5 +1,7 @@
 package ticketbooking.model.base;
 
-public interface Capacity {
+import java.io.Serializable;
+
+public interface Capacity extends Serializable {
     int getCapacity();
 }

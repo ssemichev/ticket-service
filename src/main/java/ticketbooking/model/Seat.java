@@ -24,12 +24,29 @@ public class Seat implements Capacity {
         return number;
     }
 
+    public int getSectionId() {
+        return sectionId;
+    }
+
     @Override
     public int getCapacity() {
         return 1;
     }
 
-    public int getSectionId() {
-        return sectionId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return seat.hashCode() == hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 1;
+        hash = hash * 17 + sectionId;
+        hash = hash * 31 + rowNumber;
+        hash = hash * 13 + number;
+        return hash;
     }
 }

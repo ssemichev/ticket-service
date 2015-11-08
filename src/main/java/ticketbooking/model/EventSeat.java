@@ -1,9 +1,6 @@
 package ticketbooking.model;
 
-import ticketbooking.model.base.Capacity;
-
-public class EventSeat implements Capacity {
-    private Seat seat;
+public class EventSeat extends Seat {
 
     private boolean isOnHold;
 
@@ -13,12 +10,8 @@ public class EventSeat implements Capacity {
 
     private String bookingId;
 
-    public EventSeat(Seat seat) {
-        this.seat = seat;
-    }
-
-    public Seat getSeat() {
-        return seat;
+    public EventSeat(int rowNumber, int number, int sectionId) {
+        super(rowNumber, number, sectionId);
     }
 
     public boolean isOnHold() {
@@ -59,6 +52,6 @@ public class EventSeat implements Capacity {
 
     @Override
     public int getCapacity() {
-        return (hasBooked() || isOnHold()) ? 0 : seat.getCapacity();
+        return (hasBooked() || isOnHold()) ? 0 : getCapacity();
     }
 }

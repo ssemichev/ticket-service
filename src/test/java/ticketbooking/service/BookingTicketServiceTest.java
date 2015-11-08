@@ -4,6 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ticketbooking.model.Show;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -30,11 +33,21 @@ public class BookingTicketServiceTest {
 
     @Test
     public void testFindAndHoldSeats() throws Exception {
-        ticketService.findAndHoldSeats(1, Optional.of(1), Optional.of(3), "testemail@gmail.com");
+        assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
+        ticketService.findAndHoldSeats(1, Optional.of(1), Optional.of(3), "testemail01@gmail.com");
+        Thread.sleep(500);
+        assertEquals(1249, ticketService.numSeatsAvailable(Optional.of(1)));
+        ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(3), "testemail02@gmail.com");
+        assertEquals(1239, ticketService.numSeatsAvailable(Optional.of(1)));
+        Thread.sleep(700);
+        assertEquals(1240, ticketService.numSeatsAvailable(Optional.of(1)));
+        Thread.sleep(500);
+        assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
     }
 
     @Test
     public void testReserveSeats() throws Exception {
-
+        Format formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String bookingId = 1 + "-" + "customerEmail" + "-" + formatter.format(new Date()) + "-";
     }
 }

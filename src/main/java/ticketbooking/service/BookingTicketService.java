@@ -1,12 +1,16 @@
 package ticketbooking.service;
 
+import org.springframework.context.annotation.Scope;
 import ticketbooking.model.*;
 import ticketbooking.service.base.TicketService;
 import javax.inject.Named;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Named("BookingTicketService")
+@Scope("prototype")
 public class BookingTicketService implements TicketService {
 
     private FindTicketsService findTicketsService;
@@ -15,7 +19,7 @@ public class BookingTicketService implements TicketService {
     private int holdDuration;
 
     private int minLevel, maxLevel;
-
+    private Show show;
     private Map<Integer, List<EventSeat>> seats;
     private List<Booking> holds = new LinkedList<>();
 
@@ -48,9 +52,21 @@ public class BookingTicketService implements TicketService {
 
         if (availableSeats.size() < numSeats) return new SeatHold(null, holdDuration);
 
-        findTicketsService.find(availableSeats, numSeats, min, max);
+        List<EventSeat> seatsToOnHold = findTicketsService.find(availableSeats, numSeats, min, max);
 
-        return null;
+        Date date = new Date();
+        Format formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String bookingId = show.getId() + "-" + customerEmail + "-" + formatter.format(new Date()) + "-" + min + "-" + max + "-" + numSeats;
+
+        availableSeats.stream().filter(seatsToOnHold::contains).forEach(s -> s.setOnHold(bookingId));
+
+        Booking booking = new Booking(bookingId, show,
+                seatsToOnHold.stream().map(es -> new Seat(es.getRowNumber(), es.getNumber(), es.getSectionId())).collect(Collectors.toList()),
+                bookingId, date, customerEmail);
+
+        holds.add(booking);
+
+        return new SeatHold(booking, holdDuration);
     }
 
     @Override
@@ -68,7 +84,7 @@ public class BookingTicketService implements TicketService {
 
             for (int r = 1; r <= section.getNumberOfRows(); r++)
                 for (int n = 1; n <= section.getRowCapacity(); n++)
-                    eventSeats.add(new EventSeat(new Seat(r, n, section.getId())));
+                    eventSeats.add(new EventSeat(r, n, section.getId()));
 
             seats.put(section.getId(), eventSeats);
         }
@@ -83,10 +99,25 @@ public class BookingTicketService implements TicketService {
     }
 
     private void cleanUpHolds() {
-//        long seconds = (d2.getTime()-d1.getTime())/1000;
+        Date current = new Date();
+
+        List<Booking> expiredHolds = holds.stream()
+                .filter(h -> (current.getTime() - h.getCreatedOn().getTime())  > holdDuration * 1000)
+                .collect(Collectors.toList());
+
+        //release holds from seats
+        expiredHolds.forEach(h -> h.getSeats().forEach(
+                s -> seats.get(s.getSectionId()).stream()
+                        .filter(es -> es.getNumber() == s.getNumber() && es.getRowNumber() == s.getRowNumber())
+                        .forEach(EventSeat::releaseHold)
+        ));
+
+        //remove expired holds
+        expiredHolds.forEach(holds::remove);
     }
 
     private void Initialize(Show show, int holdDuration) {
+        this.show = show;
         List<Section> sections = show.getVenue().getSections();
         minLevel = sections.stream().map(Section::getId).min(Integer::compare).get();
         maxLevel = sections.stream().map(Section::getId).max(Integer::compare).get();
