@@ -8,7 +8,7 @@ import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
-import ticketbooking.service.BookingService;
+import ticketbooking.service.BookingTicketService;
 import ticketbooking.service.CountingActor.Count;
 import ticketbooking.service.CountingActor.CountBy;
 import ticketbooking.service.CountingActor.Get;
@@ -47,7 +47,7 @@ public class Driver {
             counter.tell(new Count(), null);
             counter.tell(new Count(), null);
             counter.tell(new CountBy(5), null);
-            log.info("result: " + new BookingService().numSeatsAvailable(Optional.of(1)));
+
 
             // print the result
             FiniteDuration duration = FiniteDuration.create(3, TimeUnit.SECONDS);

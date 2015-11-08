@@ -23,7 +23,6 @@ public class ResourceFactDatabaseAdapter implements FactDatabaseAdapter<Show> {
 
     @Autowired
     public ResourceFactDatabaseAdapter(@Value("${facts.path:/facts.json}") String factPath) {
-        System.out.println("ResourceFactDatabaseAdapter");
         this.factPath = factPath;
     }
 
