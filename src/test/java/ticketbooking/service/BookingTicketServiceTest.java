@@ -4,9 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ticketbooking.model.Booking;
 import ticketbooking.model.Show;
-
 import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 

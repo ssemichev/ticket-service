@@ -1,7 +1,6 @@
 package ticketbooking.service;
 
 import ticketbooking.model.EventSeat;
-import ticketbooking.model.Seat;
 import ticketbooking.service.base.FindBestMatch;
 
 import javax.inject.Named;
