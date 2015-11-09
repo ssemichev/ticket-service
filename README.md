@@ -9,11 +9,14 @@ Java, AKKA, Distributed lock,
 
 * Maven
 > mvn clean compile
+
 > mvn exec:java -Dexec.mainClass="ticketbooking.Driver"
+
 > mvn test
 
 * Sbt
 > sbt clean compile
-> sbt run
-> sbt test
 
+> sbt run
+
+> sbt test
