@@ -3,7 +3,6 @@ package ticketbooking.service;
 import org.junit.Before;
 import org.junit.Test;
 import ticketbooking.model.Booking;
-import ticketbooking.model.SeatHold;
 import ticketbooking.model.Show;
 
 import java.util.Optional;
@@ -40,6 +39,23 @@ public class BookingTicketServiceTest {
         assertEquals(1249, ticketService.numSeatsAvailable(Optional.of(1)));
         ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(3), "testemail02@gmail.com");
         assertEquals(1239, ticketService.numSeatsAvailable(Optional.of(1)));
+
+        Thread.sleep(700);
+        assertEquals(1240, ticketService.numSeatsAvailable(Optional.of(1)));
+
+        Thread.sleep(500);
+        assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
+    }
+
+    @Test
+    public void testFindAndHoldSeatsBigNumber() throws Exception {
+        assertEquals(1250, ticketService.numSeatsAvailable(Optional.of(1)));
+        ticketService.findAndHoldSeats(1000, Optional.of(1), Optional.of(1), "testemail01@gmail.com");
+
+        Thread.sleep(500);
+        assertEquals(250, ticketService.numSeatsAvailable(Optional.of(1)));
+        ticketService.findAndHoldSeats(10, Optional.of(1), Optional.of(1), "testemail02@gmail.com");
+        assertEquals(240, ticketService.numSeatsAvailable(Optional.of(1)));
 
         Thread.sleep(700);
         assertEquals(1240, ticketService.numSeatsAvailable(Optional.of(1)));

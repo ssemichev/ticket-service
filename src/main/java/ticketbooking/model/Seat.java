@@ -36,17 +36,21 @@ public class Seat implements Capacity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Seat)) return false;
+
         Seat seat = (Seat) o;
-        return seat.hashCode() == hashCode();
+
+        if (getRowNumber() != seat.getRowNumber()) return false;
+        if (getNumber() != seat.getNumber()) return false;
+        return getSectionId() == seat.getSectionId();
+
     }
 
     @Override
     public int hashCode() {
-        int hash = 1;
-        hash = hash * 17 + sectionId;
-        hash = hash * 31 + rowNumber;
-        hash = hash * 13 + number;
-        return hash;
+        int result = getRowNumber();
+        result = 31 * result + getNumber();
+        result = 31 * result + getSectionId();
+        return result;
     }
 }

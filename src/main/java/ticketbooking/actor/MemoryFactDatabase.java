@@ -1,10 +1,12 @@
-package ticketbooking.service;
+package ticketbooking.actor;
 
 import akka.actor.AbstractActor;
 import akka.japi.pf.ReceiveBuilder;
 import org.springframework.context.annotation.Scope;
 import ticketbooking.model.Show;
 import ticketbooking.common.Protocol;
+import ticketbooking.service.ResourceFactDatabaseAdapter;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
