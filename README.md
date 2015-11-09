@@ -15,8 +15,8 @@ Java, AKKA, Distributed lock,
 ```
 
 * Sbt
+```
 > sbt clean compile
-
 > sbt run
-
 > sbt test
+```
