@@ -3,7 +3,8 @@
 ### What is this repository for? ###
 
 * Quick summary
-Java, AKKA, Distributed lock,
+
+Java, AKKA, Distributed lock, akka distributed-data
 
 ### How do I get set up? ###
 
