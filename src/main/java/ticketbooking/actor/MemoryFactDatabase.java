@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import ticketbooking.model.Show;
 import ticketbooking.common.Protocol;
 import ticketbooking.service.ResourceFactDatabaseAdapter;
+import ticketbooking.service.base.FactDatabaseAdapter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @Named("MemoryFactDatabase")
 @Scope("prototype")
 public class MemoryFactDatabase extends AbstractActor {
-    final ResourceFactDatabaseAdapter factDatabaseAdapter;
+    final FactDatabaseAdapter<Show> factDatabaseAdapter;
 
     private List<Show> shows = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class MemoryFactDatabase extends AbstractActor {
     }
 
     @Inject
-    public MemoryFactDatabase(@Named("ResourceFactDatabaseAdapter") ResourceFactDatabaseAdapter factDatabaseAdapter) {
+    public MemoryFactDatabase(@Named("ResourceFactDatabaseAdapter") FactDatabaseAdapter<Show> factDatabaseAdapter) {
         this.factDatabaseAdapter = factDatabaseAdapter;
 
         receive(ReceiveBuilder
