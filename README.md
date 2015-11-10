@@ -62,3 +62,12 @@ Akka cluster sharding uses the same mechanism to deal with re-balancing if the n
 
 Compared to an RDMS implementation, the current serialization scope is no longer the table (the set of all seat reservations) but just a single performance. It is also prepared for elastic deployments where nodes come up and go offline at any speed. In this model we don’t need to implement multithreading synchronization. Behind the scenes it will run sets of actors on sets of real threads, where typically many actors share one thread, and subsequent invocations of one actor may end up being processed on different threads. 
 Thus it is very easy to test such implementation, see BookingTicketServiceTest.
+
+### Actors model
+
+![Alt text](images/actors_model.png?raw=true "Actors Model")
+
+### High level architecture diagram
+
+![Alt text](images/high-level-architecture_diagram.png?raw=true "High level architecture diagram")
+
